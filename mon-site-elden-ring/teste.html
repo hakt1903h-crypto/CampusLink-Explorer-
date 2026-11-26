@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Entre-Terre | Chroniques, Reportages & Archives API Elden Ring</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIABLES & THÈME --- */
+        :root {
+            --bg-dark: #0c0d0e;
+            --bg-card: #151719;
+            --gold-primary: #c8a96e;
+            --gold-light: #e5cc99;
+            --gold-dark: #8a6d3b;
+            --text-main: #d8d8d8;
+            --text-muted: #9a9a9a;
+            --border-color: #2c2821;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Lora', serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .nav-link, .btn, .tab-btn {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(12, 13, 14, 0.94);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--gold-primary);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--gold-primary);
+        }
+
+        /* --- HERO BANNER --- */
+        .hero {
+            height: 85vh;
+            background: linear-gradient(to bottom, rgba(12, 13, 14, 0.4), var(--bg-dark)),
+                        radial-gradient(circle at center, #2b2416 0%, #0c0d0e 80%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-subtitle {
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: #ffffff;
+            text-shadow: 0 4px 20px rgba(200, 169, 110, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            max-width: 650px;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            background: rgba(200, 169, 110, 0.05);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--gold-primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(200, 169, 110, 0.4);
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 5rem 10%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--gold-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: var(--gold-primary);
+            margin: 0 auto;
+        }
+
+        /* --- REPORTAGE --- */
+        .reportage-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            border-radius: 4px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .reportage-meta {
+            font-size: 0.9rem;
+            color: var(--gold-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .reportage-container h3 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .reportage-container p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+
+        blockquote {
+            border-left: 3px solid var(--gold-primary);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--gold-light);
+            font-size: 1.1rem;
+        }
+
+        /* --- SECTION API EN DIRECT --- */
+        .api-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .api-tabs {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 10px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            border-color: var(--gold-primary);
+            color: var(--gold-primary);
+            background: rgba(200, 169, 110, 0.1);
+        }
+
+        .search-bar {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            gap: 0.5rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--gold-primary);
+        }
+
+        .api-status {
+            text-align: center;
+            color: var(--gold-primary);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        /* --- GRILLE DES CARTES API --- */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-primary);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #090a0b;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gold-primary);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.8rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--gold-light);
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.8rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #070809;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 2.5rem 5%;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul { display: none; }
+            section { padding: 3rem 5%; }
+            .reportage-container { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- EN-TÊTE -->
+    <header>
+        <a href="#" class="logo">Elden Chronicles</a>
+        <nav>
+            <ul>
+                <li><a href="#reportage" class="nav-link">Grand Reportage</a></li>
+                <li><a href="#archives-api" class="nav-link">Archives API (En Direct)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- BANNIÈRE PRINCIPALE -->
+    <section class="hero">
+        <span class="hero-subtitle">Lève-toi, Sans-Éclat</span>
+        <h1>Les Chroniques de l'Entre-Terre</h1>
+        <p>Reportages exclusifs sur la création de FromSoftware et accès direct aux archives de l'Entre-Terre propulsées par API.</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+            <a href="#reportage" class="btn">Lire le reportage</a>
+            <a href="#archives-api" class="btn">Explorer l'API</a>
+        </div>
+    </section>
+
+    <!-- SECTION REPORTAGE -->
+    <section id="reportage">
+        <div class="section-header">
+            <h2>Grand Reportage</h2>
+            <div class="divider"></div>
+        </div>
+
+        <article class="reportage-container">
+            <div class="reportage-meta">
+                <span>Par : Le Scribe de la Table Ronde</span>
+                <span>•</span>
+                <span>Dossier : Architecture & Narration</span>
+            </div>
+            <h3>Dans les coulisses de l'Entre-Terre : Comment Hidetaka Miyazaki a réinventé le monde ouvert</h3>
+            <p>
+                Lorsqu'<strong>Elden Ring</strong> a vu le jour, l'industrie du jeu vidéo a subi un séisme silencieux. Contrairement aux productions modernes qui saturent l'écran d'icônes et de marqueurs de quêtes, le studio japonais FromSoftware a fait le pari audacieux de la confiance absolue envers l'intelligence et la curiosité du joueur.
+            </p>
+            <blockquote>
+                « Nous voulions que l'exploration soit dictée par ce que le joueur voit à l'horizon, et non par une liste de tâches à cocher. »
+            </blockquote>
+            <p>
+                Du premier regard posé sur l'Arbre-Monde doré en sortant de la tombe de Nécrolimbe jusqu'aux profondeurs oubliées de la Siofra, chaque ruine raconte une histoire. La collaboration avec l'écrivain <strong>George R. R. Martin</strong> a permis de bâtir une mythologie familiale complexe autour de la reine Marika l'Éternelle.
+            </p>
+        </article>
+    </section>
+
+    <!-- SECTION ARCHIVES CONNECTÉES À L'API -->
+    <section id="archives-api">
+        <div class="section-header">
+            <h2>Archives de l'Entre-Terre (API)</h2>
+            <div class="divider"></div>
+            <p style="color: var(--text-muted); margin-top: 1rem;">Données chargées en temps réel depuis <code>eldenring.fanapis.com</code></p>
+        </div>
+
+        <!-- Contrôles et Recherche API -->
+        <div class="api-controls">
+            <div class="api-tabs">
+                <button class="tab-btn active" onclick="changerCategorie('bosses', this)">Boss</button>
+                <button class="tab-btn" onclick="changerCategorie('weapons', this)">Armes</button>
+                <button class="tab-btn" onclick="changerCategorie('locations', this)">Lieux</button>
+                <button class="tab-btn" onclick="changerCategorie('npcs', this)">Personnages (PNJ)</button>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="api-search" placeholder="Rechercher en anglais (ex: Malenia, Radahn, Katana...)">
+                <button class="btn" onclick="rechercherAPI()">Chercher</button>
+            </div>
+        </div>
+
+        <div id="api-status" class="api-status">Connexion à l'Arbre-Monde en cours...</div>
+
+        <!-- Conteneur où les cartes API seront injectées -->
+        <div id="api-grid" class="grid-cards"></div>
+    </section>
+
+    <!-- PIED DE PAGE -->
+    <footer>
+        <p>© 2026 Elden Chronicles — Propulsé par Elden Ring Fan API. Elden Ring™ est une marque déposée de FromSoftware, Inc.</p>
+    </footer>
+
+    <!-- LOGIQUE JAVASCRIPT POUR LES APPELS API -->
+    <script>
+        const BASE_URL = 'https://eldenring.fanapis.com/api';
+        let categorieActuelle = 'bosses';
+
+        // Fonction principale pour interroger l'API
+        async function chargerDonneesAPI(categorie, recherche = '') {
+            const grid = document.getElementById('api-grid');
+            const status = document.getElementById('api-status');
+            
+            grid.innerHTML = '';
+            status.textContent = 'Consultation des archives de l\'Entre-Terre...';
+
+            try {
+                // Construction de l'URL avec limite de 9 résultats ou filtre par nom
+                let url = `${BASE_URL}/${categorie}?limit=9`;
+                if (recherche.trim() !== '') {
+                    url = `${BASE_URL}/${categorie}?name=${encodeURIComponent(recherche)}`;
+                }
+
+                const reponse = await fetch(url);
+                if (!reponse.ok) throw new Error('Erreur réseau avec l\'API');
+
+                const resultat = await reponse.json();
+                const donnees = resultat.data;
+
+                if (!donnees || donnees.length === 0) {
+                    status.textContent = 'Aucune archive trouvée pour cette recherche (astuce : utilisez les noms anglais du jeu).';
+                    return;
+                }
+
+                status.textContent = `${donnees.length} archive(s) récupérée(s) depuis l'API.`;
+                afficherCartes(donnees, categorie);
+
+            } catch (erreur) {
+                console.error(erreur);
+                status.textContent = 'Impossible de joindre l\'API Elden Ring pour le moment. Vérifiez votre connexion.';
+            }
+        }
+
+        // Fonction pour générer le HTML de chaque carte reçue de l'API
+        function afficherCartes(items, categorie) {
+            const grid = document.getElementById('api-grid');
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Gestion de l'image (image par défaut si absente dans l'API)
+                const imageUrl = item.image ? item.image : 'https://placehold.co/600x400/151719/c8a96e?text=Archive+Sans+Image';
+
+                // Adaptation des informations secondaires selon la catégorie
+                let metaInfo = '';
+                if (categorie === 'bosses') {
+                    metaInfo = `<strong>Lieu :</strong> ${item.location || 'Inconnu'} <br> <strong>PV :</strong> ${item.healthPoints || 'Non répertoriés'}`;
+                } else if (categorie === 'weapons') {
+                    metaInfo = `<strong>Catégorie :</strong> ${item.category || 'Arme'} <br> <strong>Poids :</strong> ${item.weight || '?'}`;
+                } else if (categorie === 'locations') {
+                    metaInfo = `<strong>Région :</strong> ${item.region || 'Entre-Terre'}`;
+                } else if (categorie === 'npcs') {
+                    metaInfo = `<strong>Rôle :</strong> ${item.role || 'Habitants de l\'Entre-Terre'}`;
+                }
+
+                card.innerHTML = `
+                    <img src="${imageUrl}" alt="${item.name}" class="card-img" loading="lazy">
+                    <div class="card-body">
+                        <div class="card-tag">${categorie.toUpperCase()}</div>
+                        <h3>${item.name}</h3>
+                        <p>${item.description ? item.description : 'Aucune description disponible dans les parchemins.'}</p>
+                        <div class="card-meta">${metaInfo}</div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Changement d'onglet (Boss, Armes, Lieux, PNJ)
+        function changerCategorie(nouvelleCategorie, bouton) {
+            categorieActuelle = nouvelleCategorie;
+            document.getElementById('api-search').value = '';
+
+            // Mise à jour visuelle du bouton actif
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            bouton.classList.add('active');
+
+            chargerDonneesAPI(categorieActuelle);
+        }
+
+        // Recherche via le champ texte
+        function rechercherAPI() {
+            const terme = document.getElementById('api-search').value;
+            chargerDonneesAPI(categorieActuelle, terme);
+        }
+
+        // Permettre de valider la recherche avec la touche Entrée
+        document.getElementById('api-search').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                rechercherAPI();
+            }
+        });
+
+        // Chargement initial au démarrage de la page
+        window.addEventListener('DOMContentLoaded', () => {
+            chargerDonneesAPI('bosses');
+        });
+    </script>
+
+</body>
+</html>
